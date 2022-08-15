@@ -5,5 +5,5 @@ public enum RoomType {
     STANDARD,
     MASTER,
     DELUXE
-    
+
 }

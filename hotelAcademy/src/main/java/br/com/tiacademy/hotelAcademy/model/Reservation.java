@@ -1,15 +1,9 @@
-package br.com.tiacademy.hotelAcademy.entity;
+package br.com.tiacademy.hotelAcademy.model;
 
-import br.com.tiacademy.hotelAcademy.repository.CalculateReservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +17,11 @@ public class Reservation {
     private String initialDate;
     private String finalDate;
 
-    // private Room room;
+    @ManyToOne
+    @JoinColumn(name = "roomNumber", referencedColumnName = "roomNumber")
+    private Room room;
+
     // private MainGuestId mainGuestid;
+
+    //CalculateReservation calculateReservation = new CalculateReservation();
 }

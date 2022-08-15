@@ -1,7 +1,7 @@
 package br.com.tiacademy.hotelAcademy.service;
 
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
-import br.com.tiacademy.hotelAcademy.entity.Reservation;
+import br.com.tiacademy.hotelAcademy.model.Reservation;
 import br.com.tiacademy.hotelAcademy.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

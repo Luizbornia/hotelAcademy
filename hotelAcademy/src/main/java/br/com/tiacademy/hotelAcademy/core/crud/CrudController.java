@@ -18,11 +18,11 @@ public abstract class CrudController<T, ID> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<T> findById(@PathVariable("id") ID id) {
+    public ResponseEntity<Object> findById(@PathVariable("id") ID id) {
         T serviceResponse = service.findById(id);
 
         if (Objects.isNull(serviceResponse)) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe a reserva pesquisada!");
         }
         else {
             return ResponseEntity.ok(serviceResponse);
