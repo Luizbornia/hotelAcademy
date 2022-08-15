@@ -4,7 +4,31 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <changeSet id="1" author="André">
+    <changeSet id="1" author="Kassia">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela ROOM">
+               <not>
+                <tableExists tableName="ROOM"/>
+                    </not>
+                </preConditions>
+            
+         <createTable tableName="ROOM">
+            
+            <column name="ROOM_NUMBER" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ROOM"/>
+            </column>
+            
+            <column name="SLEEP" type="${description}">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="ROOM_TYPE" type="${description}">
+                <constraints nullable="false"/>
+            </column>  
+        </createTable>
+           
+    </changeSet>
+
+    <changeSet id="2" author="André">
         <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela RESERVAS">
             <not>
                 <tableExists tableName="RESERVATION"/>
