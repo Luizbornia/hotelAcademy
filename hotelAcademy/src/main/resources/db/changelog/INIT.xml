@@ -4,4 +4,47 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
+    <changeSet id="1" author="André">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela RESERVAS">
+            <not>
+                <tableExists tableName="RESERVATION"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="RESERVATION">
+
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RESERVATION"/>
+            </column>
+
+            <column name="initial_date" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="final_date" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- <column name="RoomNumber" type="INT">
+                <constraints foreignKeyName="fk_roomNumber_reservation"
+                             referencedTableName="roomNumber"
+                             referencedColumnNames="id"/>
+            </column>
+
+            <column name="MainGuest" type="INT">
+                <constraints foreignKeyName="fk_MainGuest_reservation"
+                             referencedTableName="MainGuest"
+                             referencedColumnNames="id"/>
+            </column> -->
+
+        </createTable>
+
+        <addAutoIncrement tableName="RESERVATION"
+                          columnName="id"
+                          columnDataType="int"
+                          incrementBy="1"
+                          startWith="1"
+        />
+    </changeSet>
+
 </databaseChangeLog>
