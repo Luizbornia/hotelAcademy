@@ -75,4 +75,59 @@
         />
     </changeSet>
 
+    <changeSet id="3" author="Luiz">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela HOSPEDE">
+            <not>
+                <tableExists tableName="HOSPEDE"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="HOSPEDE">
+            <column name="COD_GUEST" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CODGUEST"/>
+            </column>
+            <column name="RESPONSIBILITY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COD_RESPONSIBLE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CPF" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BIRTHDAY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CITY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CEP" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addAutoIncrement tableName="HOSPEDE"
+                          columnName="COD_GUEST"
+                          columnDataType="int"
+                          incrementBy="1"
+                          startWith="1"
+        />
+    </changeSet>
+
 </databaseChangeLog>
