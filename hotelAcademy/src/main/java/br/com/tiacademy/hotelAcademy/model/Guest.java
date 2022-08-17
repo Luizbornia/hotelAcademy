@@ -17,7 +17,7 @@ public class Guest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codGuest;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private Responsibility responsibility;

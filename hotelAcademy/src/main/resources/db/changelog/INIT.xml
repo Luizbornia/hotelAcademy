@@ -76,15 +76,15 @@
     </changeSet>
 
     <changeSet id="3" author="Luiz">
-        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela HOSPEDE">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela GUEST">
             <not>
-                <tableExists tableName="HOSPEDE"/>
+                <tableExists tableName="GUEST"/>
             </not>
         </preConditions>
 
-        <createTable tableName="HOSPEDE">
-            <column name="COD_GUEST" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CODGUEST"/>
+        <createTable tableName="GUEST">
+            <column name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GUEST"/>
             </column>
             <column name="RESPONSIBILITY" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -122,8 +122,8 @@
 
         </createTable>
 
-        <addAutoIncrement tableName="HOSPEDE"
-                          columnName="COD_GUEST"
+        <addAutoIncrement tableName="GUEST"
+                          columnName="ID"
                           columnDataType="int"
                           incrementBy="1"
                           startWith="1"
