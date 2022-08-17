@@ -22,7 +22,7 @@ public abstract class CrudController<T, ID> {
         T serviceResponse = service.findById(id);
 
         if (Objects.isNull(serviceResponse)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe a reserva pesquisada!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         else {
             return ResponseEntity.ok(serviceResponse);

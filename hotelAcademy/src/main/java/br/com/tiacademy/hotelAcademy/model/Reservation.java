@@ -1,8 +1,12 @@
 package br.com.tiacademy.hotelAcademy.model;
 
+import br.com.tiacademy.hotelAcademy.CalculateReservation;
+import br.com.tiacademy.hotelAcademy.service.ReservationService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 @AllArgsConstructor
@@ -18,10 +22,17 @@ public class Reservation {
     private String finalDate;
 
     @ManyToOne
-    @JoinColumn(name = "roomNumber", referencedColumnName = "roomNumber")
+    @JoinColumn(name = "ROOM_NUMBER", referencedColumnName = "roomNumber")
     private Room room;
 
-    // private MainGuestId mainGuestid;
+    @ManyToOne
+    @JoinColumn(name = "MAIN_GUEST_ID", referencedColumnName = "id")
+    private Guest guest;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
+    //private CalculateReservation reservationValue;
 
     //CalculateReservation calculateReservation = new CalculateReservation();
 }

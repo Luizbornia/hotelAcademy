@@ -8,13 +8,4 @@ import java.util.Date;
 @SpringBootTest
 class HotelAcademyApplicationTests {
 
-	/*@Test
-	public void calcularReserva() {
-		CalculateReservation calculateReservation = new CalculateReservation();
-		calculateReservation.calculateReservation("STANDARD","INDIVIDUAL", calculateReservation.dailyAmount(finalDate, initialDate))
-		System.out.println(calculateReservation);
-	}*/
-
-
-
 }

@@ -1,6 +1,5 @@
 package br.com.tiacademy.hotelAcademy.repository;
 
-import br.com.tiacademy.hotelAcademy.CalculateReservation;
 import br.com.tiacademy.hotelAcademy.core.crud.CrudRepository;
 import br.com.tiacademy.hotelAcademy.model.Reservation;
 import org.springframework.data.jpa.repository.Query;

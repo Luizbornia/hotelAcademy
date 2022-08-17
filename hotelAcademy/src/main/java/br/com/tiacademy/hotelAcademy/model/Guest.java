@@ -25,7 +25,7 @@ public class Guest {
     private Long codResponsible;
     private String name;
     private String cpf;
-    private Date birthday;
+    private String birthday; // Pedir ajuda para ser Date
     private String city;
     private String state;
     private String cep;

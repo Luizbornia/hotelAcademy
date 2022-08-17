@@ -28,54 +28,7 @@
 
     </changeSet>
 
-    <changeSet id="2" author="André">
-        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela RESERVAS">
-            <not>
-                <tableExists tableName="RESERVATION"/>
-            </not>
-        </preConditions>
-
-        <createTable tableName="RESERVATION">
-
-            <column name="id" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RESERVATION"/>
-            </column>
-
-            <column name="initial_date" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="final_date" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="ROOM_NUMBER" type="INT">
-                <constraints foreignKeyName="fk_roomNumber_reservation"
-                             referencedTableName="ROOM"
-                             referencedColumnNames="ROOM_NUMBER"/>
-            </column>
-
-            <!--
-
-            <column name="MAIN_GUEST" type="INT">
-                <constraints foreignKeyName="fk_MainGuest_reservation"
-                             referencedTableName="MainGuest"
-                             referencedColumnNames="MAIN_GUEST"/>
-            </column>
-
-            -->
-
-        </createTable>
-
-        <addAutoIncrement tableName="RESERVATION"
-                          columnName="id"
-                          columnDataType="int"
-                          incrementBy="1"
-                          startWith="1"
-        />
-    </changeSet>
-
-    <changeSet id="3" author="Luiz">
+    <changeSet id="2" author="Luiz">
         <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela GUEST">
             <not>
                 <tableExists tableName="GUEST"/>
@@ -83,39 +36,51 @@
         </preConditions>
 
         <createTable tableName="GUEST">
+
             <column name="ID" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GUEST"/>
             </column>
+
             <column name="RESPONSIBILITY" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="COD_RESPONSIBLE" type="INT">
                 <constraints nullable="false"/>
             </column>
+
             <column name="NAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="CPF" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="BIRTHDAY" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="CITY" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="STATE" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="CEP" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="STREET" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="NUMBER" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="EMAIL" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -130,4 +95,57 @@
         />
     </changeSet>
 
+    <changeSet id="3" author="André">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela RESERVAS">
+            <not>
+                <tableExists tableName="RESERVATION"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="RESERVATION">
+
+            <column name="ID" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RESERVATION"/>
+            </column>
+
+            <column name="INITIAL_DATE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="FINAL_DATE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="ROOM_NUMBER" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_roomNumber_reservation"
+                             referencedTableName="ROOM"
+                             referencedColumnNames="ROOM_NUMBER"/>
+            </column>
+
+            <column name="MAIN_GUEST_ID" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_responsibility_reservation"
+                             referencedTableName="GUEST"
+                             referencedColumnNames="ID"/>
+            </column>
+
+            <column name="RESERVATION_STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="RESERVATION_VALUE" type="FLOAT">
+                <constraints nullable="false"/>
+           </column>
+
+
+        </createTable>
+
+        <addAutoIncrement tableName="RESERVATION"
+                          columnName="ID"
+                          columnDataType="int"
+                          incrementBy="1"
+                          startWith="1"
+        />
+    </changeSet>
 </databaseChangeLog>
