@@ -19,18 +19,18 @@ public class ReservationController extends CrudController<Reservation, Long> {
     @Autowired
     protected CalculateReservation calculateReservation;
 
-    @PostMapping("/checkin")
-    public ResponseEntity<Object> registerReservation(@RequestBody ReservationDto reservationDto) {
-        Reservation reservation = new Reservation();
+    // @PostMapping("/checkin")
+    // public ResponseEntity<Object> registerReservation(@RequestBody ReservationDto reservationDto) {
+    //     Reservation reservation = new Reservation();
 
-        reservation.setInitialDate(reservationDto.getInitialDate()); // criar metodo para pegar a data inicial no ReservationDto
-        reservation.setFinalDate(reservationDto.getFinalDate()); //  criar metodo para pegar a data final no ReservationDto
-        //reservation.setRoom(reservationDto.getRoom()); // validar se o quarto está ocupado ou reservado
+    //     reservation.setInitialDate(reservationDto.getInitialDate()); // criar metodo para pegar a data inicial no ReservationDto
+    //     reservation.setFinalDate(reservationDto.getFinalDate()); //  criar metodo para pegar a data final no ReservationDto
+    //     //reservation.setRoom(reservationDto.getRoom()); // validar se o quarto está ocupado ou reservado
 
-        //return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.registerReservation(reservation));
+    //     //return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.registerReservation(reservation));
 
-        return ResponseEntity.ok().build();
-    }
+    //     return ResponseEntity.ok().build();
+    // }
 
 
 }

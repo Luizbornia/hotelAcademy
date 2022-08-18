@@ -9,6 +9,13 @@ public class RoomService extends CrudService<Room, Long> {
 
     @Override // Corrigir
     protected Room editName(Room infos, Room entity) {
-        return null;
+        infos.setRoomNumber(entity.getRoomNumber());
+        infos.setRoomType(entity.getRoomType());
+        infos.setSleep(entity.getSleep());
+        return infos;
     }
+
+
+
+    
 }
