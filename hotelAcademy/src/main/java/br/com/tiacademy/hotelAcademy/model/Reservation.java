@@ -1,13 +1,23 @@
 package br.com.tiacademy.hotelAcademy.model;
 
-import br.com.tiacademy.hotelAcademy.CalculateReservation;
-import br.com.tiacademy.hotelAcademy.service.ReservationService;
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.*;
+import lombok.extern.jackson.Jacksonized;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,8 +28,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String initialDate;
-    private String finalDate;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate initialDate;
+
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate finalDate;
 
     @ManyToOne
     @JoinColumn(name = "ROOM_NUMBER", referencedColumnName = "roomNumber")
@@ -32,7 +45,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
-    //private CalculateReservation reservationValue;
+    private Long reservationValue;
 
     //CalculateReservation calculateReservation = new CalculateReservation();
 }
