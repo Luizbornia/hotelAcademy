@@ -32,7 +32,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
-    //private CalculateReservation reservationValue;
+    private Long reservationValue;
 
     //CalculateReservation calculateReservation = new CalculateReservation();
 }

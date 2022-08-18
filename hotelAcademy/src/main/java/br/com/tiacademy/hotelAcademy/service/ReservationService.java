@@ -3,14 +3,20 @@ package br.com.tiacademy.hotelAcademy.service;
 import br.com.tiacademy.hotelAcademy.CalculateReservation;
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
 import br.com.tiacademy.hotelAcademy.model.Reservation;
+import br.com.tiacademy.hotelAcademy.model.ReservationStatus;
 import br.com.tiacademy.hotelAcademy.model.RoomType;
 import br.com.tiacademy.hotelAcademy.model.Sleep;
 import br.com.tiacademy.hotelAcademy.repository.ReservationRepository;
+import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservationService extends CrudService<Reservation, Long> implements CalculateReservation {
+
     @Override // Corrigir
     protected Reservation editName(Reservation infos, Reservation entity) {
         return null;
@@ -18,6 +24,8 @@ public class ReservationService extends CrudService<Reservation, Long> implement
 
     @Autowired
     protected ReservationRepository reservationRepository;
+    @Autowired
+    protected RoomRepository roomRepository;
 
     public Reservation registerReservation(Reservation reservation) {
         /* if (Room.isAvailable()) {
@@ -63,8 +71,23 @@ public class ReservationService extends CrudService<Reservation, Long> implement
         return roomValue * dailyAmount;
     }
 
+    public List<Reservation> findReservationsByMainGuestId(Long id) {
+        return reservationRepository.findReservationsByMainGuestId(id);
+    }
+
+    public List<Reservation> findReservationsByReservationStatus(String status){
+       return reservationRepository.findReservationsByReservationStatus(status);
+    }
+
+   /* public Reservation createReservation(Long roomNumber, Long mainGuest) {
 
 
+        return reservationRepository.createReservation(roomNumber, mainGuest);
+    }*/
 
+    public String roomIsAvailable(Long roomNumber) {
+        return reservationRepository.roomIsAvailable(roomNumber);
+
+    }
 
 }
