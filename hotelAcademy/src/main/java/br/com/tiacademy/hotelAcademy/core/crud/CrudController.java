@@ -31,7 +31,8 @@ public abstract class CrudController<T, ID> {
 
     @PostMapping
     public ResponseEntity<T> save(@RequestBody T entity) {
-        return ResponseEntity.ok(service.save(entity));
+        T saveEntity = service.save(entity);
+        return ResponseEntity.ok(service.save(saveEntity));
     }
 
     @PutMapping("/{id}")

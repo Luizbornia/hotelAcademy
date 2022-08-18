@@ -28,11 +28,24 @@ public class ReservationController extends CrudController<Reservation, Long> {
     @Autowired
     protected CalculateReservation calculateReservation;
 
-
     @GetMapping("/hospede={MainGuestId}")
     public ResponseEntity<List<Reservation>> findReservationsByMainGuestId(@PathVariable("MainGuestId") Long id) {
             return ResponseEntity.status(HttpStatus.OK).body(reservationService.findReservationsByMainGuestId(id));
     }
+
+    // @PostMapping("/checkin")
+    // public ResponseEntity<Object> registerReservation(@RequestBody ReservationDto reservationDto) {
+    //     Reservation reservation = new Reservation();
+
+    //     reservation.setInitialDate(reservationDto.getInitialDate()); // criar metodo para pegar a data inicial no ReservationDto
+    //     reservation.setFinalDate(reservationDto.getFinalDate()); //  criar metodo para pegar a data final no ReservationDto
+    //     //reservation.setRoom(reservationDto.getRoom()); // validar se o quarto está ocupado ou reservado
+
+    //     //return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.registerReservation(reservation));
+
+    //     return ResponseEntity.ok().build();
+    // }
+
 
     @GetMapping("/status={reservationStatus}")
     public ResponseEntity<List<Reservation>> findReservationsByReservationStatus(@PathVariable("reservationStatus") String status){
@@ -58,8 +71,8 @@ public class ReservationController extends CrudController<Reservation, Long> {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospede informado não existe!");
         }
 
-        reservation.setInitialDate(reservationDto.getInitialDate());
-        reservation.setFinalDate(reservationDto.getFinalDate());
+        reservation.setInitialDate(reservation.getInitialDate());
+        reservation.setFinalDate(reservation.getFinalDate());
         reservation.setRoom(room);
         reservation.setGuest(guest);
         reservation.setReservationStatus(reservationDto.getReservationStatus());
