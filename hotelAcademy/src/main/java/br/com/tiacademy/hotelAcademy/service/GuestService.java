@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class GuestService extends CrudService<Guest, Long> {
 
-    @Override // Corrigir
+    @Override
     protected Guest editName(Guest infos, Guest entity) {
         infos.setName(entity.getName());
         infos.setBirthday(entity.getBirthday());
         infos.setCpf(entity.getCpf());
         infos.setResponsibility(entity.getResponsibility());
-        infos.setCodResponsible(entity.getCodResponsible());
+        infos.setResponsibleId(entity.getResponsibleId());
         infos.setEmail(entity.getEmail());
         infos.setCity(entity.getCity());
         infos.setState(entity.getState());

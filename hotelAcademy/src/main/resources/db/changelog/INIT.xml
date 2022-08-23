@@ -45,7 +45,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="COD_RESPONSIBLE" type="INT">
+            <column name="RESPONSIBLE_ID" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -57,7 +57,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="BIRTHDAY" type="VARCHAR(255)">
+            <column name="BIRTHDAY" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
@@ -108,11 +108,11 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RESERVATION"/>
             </column>
 
-            <column name="INITIAL_DATE" type="VARCHAR(255)">
+            <column name="INITIAL_DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="FINAL_DATE" type="VARCHAR(255)">
+            <column name="FINAL_DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
 

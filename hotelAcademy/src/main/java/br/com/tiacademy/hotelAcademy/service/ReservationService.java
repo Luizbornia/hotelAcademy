@@ -3,11 +3,13 @@ package br.com.tiacademy.hotelAcademy.service;
 import br.com.tiacademy.hotelAcademy.CalculateReservation;
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
 import br.com.tiacademy.hotelAcademy.model.Reservation;
+import br.com.tiacademy.hotelAcademy.model.Room;
 import br.com.tiacademy.hotelAcademy.model.RoomType;
 import br.com.tiacademy.hotelAcademy.model.Sleep;
 import br.com.tiacademy.hotelAcademy.repository.ReservationRepository;
 import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class ReservationService extends CrudService<Reservation, Long> implement
     @Autowired
     protected RoomRepository roomRepository;
 
-    @Override // Corrigir
+    @Override // PUT
     protected Reservation editName(Reservation infos, Reservation entity) {
         infos.setInitialDate(entity.getInitialDate());
         infos.setFinalDate(entity.getFinalDate());
@@ -30,16 +32,6 @@ public class ReservationService extends CrudService<Reservation, Long> implement
     }
 
 
-    // public Reservation registerReservation(Reservation reservation) {
-    //     /* if (Room.isAvailable()) {
-    //         return reservationRepository.registerReservation(reservation);
-    //     } else {
-    //         return reservationRepository.roomIsOcuppied();
-    //     }
-    //      */
-    //     //return reservationRepository.registerReservation(reservation);
-    //     return null;
-    // }
 
     public double calculateReservation(RoomType roomType, Sleep sleep, Integer dailyAmount) {
 
@@ -67,22 +59,20 @@ public class ReservationService extends CrudService<Reservation, Long> implement
         return roomValue * dailyAmount;
     }
 
-    public List<Reservation> findReservationsByMainGuestId(Long id) {
-        return reservationRepository.findReservationsByMainGuestId(id);
+    public List<Reservation> findReservationsByMainGuestId(Long GuestId) {
+        return reservationRepository.findReservationsByMainGuestId(GuestId);
     }
 
-    public List<Reservation> findReservationsByReservationStatus(String status){
-       return reservationRepository.findReservationsByReservationStatus(status);
+    public List<Reservation> findReservationsByReservationStatus(String reservationstatus){
+       return reservationRepository.findReservationsByReservationStatus(reservationstatus);
     }
 
-   /* public Reservation createReservation(Long roomNumber, Long mainGuest) {
-
-
-        return reservationRepository.createReservation(roomNumber, mainGuest);
-    }*/
-
-    public String roomIsAvailable(Long roomNumber) {
+    public Long roomIsAvailable(Long roomNumber) {
         return reservationRepository.roomIsAvailable(roomNumber);
-
     }
+
+    public boolean roomExists(Long roomNumber) {
+        return reservationRepository.roomExists(roomNumber);
+    }
+
 }

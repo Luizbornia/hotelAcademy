@@ -29,10 +29,10 @@ public class Reservation {
     private Long id;
 
     @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDate initialDate;
+    private LocalDate initialDate; // Alterar para localDate
 
     @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDate finalDate;
+    private LocalDate finalDate; // Alterar para localDate
 
     @ManyToOne
     @JoinColumn(name = "ROOM_NUMBER", referencedColumnName = "roomNumber")

@@ -1,28 +1,24 @@
 package br.com.tiacademy.hotelAcademy.dto;
 
 import br.com.tiacademy.hotelAcademy.model.ReservationStatus;
-import br.com.tiacademy.hotelAcademy.model.Room;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 
 public class ReservationDto {
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
-    private String initialDate;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate initialDate;
 
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
-    private String finalDate;
-
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate finalDate;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
