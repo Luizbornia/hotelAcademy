@@ -17,11 +17,11 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ROOM"/>
             </column>
 
-            <column name="SLEEP" type="VARCHAR(255)"> <!--${description}-->
+            <column name="SLEEP" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ROOM_TYPE" type="VARCHAR(255)"> <!--${description}-->
+            <column name="ROOM_TYPE" type="VARCHAR(255)"> 
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -41,14 +41,6 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GUEST"/>
             </column>
 
-            <column name="RESPONSIBILITY" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="COD_RESPONSIBLE" type="INT">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="NAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -57,7 +49,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="BIRTHDAY" type="VARCHAR(255)">
+            <column name="BIRTHDAY" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
@@ -69,7 +61,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="CEP" type="VARCHAR(255)">
+            <column name="ZIP_CODE" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -96,52 +88,59 @@
     </changeSet>
 
     <changeSet id="3" author="André">
-        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela RESERVAS">
+        <preConditions onFail="MARK_RAN" onFailMessage="Já existe a tabela BOOKING">
             <not>
-                <tableExists tableName="RESERVATION"/>
+                <tableExists tableName="BOOKING"/>
             </not>
         </preConditions>
 
-        <createTable tableName="RESERVATION">
+        <createTable tableName="BOOKING">
 
             <column name="ID" type="INT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RESERVATION"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BOOKING"/>
             </column>
 
-            <column name="INITIAL_DATE" type="VARCHAR(255)">
+            <column name="INITIAL_DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="FINAL_DATE" type="VARCHAR(255)">
+            <column name="FINAL_DATE" type="DATE">
                 <constraints nullable="false"/>
             </column>
 
             <column name="ROOM_NUMBER" type="INT">
                 <constraints nullable="false"
-                             foreignKeyName="fk_roomNumber_reservation"
+                             foreignKeyName="fk_roomNumber_booking"
                              referencedTableName="ROOM"
                              referencedColumnNames="ROOM_NUMBER"/>
             </column>
 
             <column name="MAIN_GUEST_ID" type="INT">
                 <constraints nullable="false"
-                             foreignKeyName="fk_responsibility_reservation"
+                             foreignKeyName="fk_guest_booking"
                              referencedTableName="GUEST"
                              referencedColumnNames="ID"/>
             </column>
 
-            <column name="RESERVATION_STATUS" type="VARCHAR(255)">
+            <column name="DEPENDENT_ID" type="INT">
+                <constraints nullable="true"
+                             foreignKeyName="fk_dependent_booking"
+                             referencedTableName="GUEST"
+                             referencedColumnNames="ID"/>
+            </column>
+
+            <column name="BOOKING_STATUS" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="RESERVATION_VALUE" type="FLOAT">
+            <column name="BOOKING_PRICE" type="FLOAT">
                 <constraints nullable="false"/>
            </column>
 
 
         </createTable>
 
-        <addAutoIncrement tableName="RESERVATION"
+        <addAutoIncrement tableName="BOOKING"
                           columnName="ID"
                           columnDataType="int"
                           incrementBy="1"
