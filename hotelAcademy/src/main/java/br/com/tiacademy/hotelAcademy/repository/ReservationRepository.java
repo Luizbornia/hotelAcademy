@@ -15,14 +15,14 @@ public interface ReservationRepository extends CrudRepository<Reservation, Long>
     List <Reservation> findReservationsByMainGuestId(@Param("mainGuestId")Long GuestId);
 
     // Query para o GetMapping
-     @Query(value = "SELECT * FROM reservation r WHERE r.RESERVATION_STATUS like %:status% GROUP BY r.ID", nativeQuery = true)
+    @Query(value = "SELECT * FROM reservation r WHERE r.RESERVATION_STATUS like %:status% GROUP BY r.ID", nativeQuery = true)
     List <Reservation>  findReservationsByReservationStatus(@Param("status")String reservationstatus);
 
-     // Query para o PostMapping
+    //Query para o PostMapping
     @Query(value = "SELECT ROOM_NUMBER FROM reservation r WHERE ROOM_NUMBER = :roomNumber AND RESERVATION_STATUS like 'ACTIVE' " ,nativeQuery = true)
     Long roomIsAvailable(@Param("roomNumber") Long roomNumber);
 
-    @Query(value = "SELECT ROOM_NUMBER FROM room r WHERE ROOM_NUMBER = :roomNumber")
+    @Query(value = "SELECT ROOM_NUMBER FROM room r WHERE ROOM_NUMBER = :roomNumber", nativeQuery = true)
     boolean roomExists(@Param("") Long roomNumber);
 
 }

@@ -1,5 +1,6 @@
 package br.com.tiacademy.hotelAcademy.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +22,7 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private Sleep sleep;
     
+    @Column(name = "ROOM_TYPE")
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
 

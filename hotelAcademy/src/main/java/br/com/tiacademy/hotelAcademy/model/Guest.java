@@ -28,6 +28,7 @@ public class Guest {
 
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate birthday;
+    
     private String city;
     private String state;
 
