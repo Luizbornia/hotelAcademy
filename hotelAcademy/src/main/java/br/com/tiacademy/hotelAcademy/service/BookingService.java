@@ -16,7 +16,7 @@ import java.util.Objects;
 @Service
 public class BookingService extends CrudService<Booking, Long> {
     @Autowired
-    protected BookingRepository reservationRepository;
+    protected BookingRepository bookingRepository;
     @Autowired
     protected RoomRepository roomRepository;
     @Autowired
@@ -28,7 +28,7 @@ public class BookingService extends CrudService<Booking, Long> {
         infos.setFinalDate(entity.getFinalDate());
         infos.setRoom(entity.getRoom());
         infos.setGuest(entity.getGuest());
-        infos.setReservationStatus(entity.getReservationStatus());
+        infos.setBookingStatus(entity.getBookingStatus());
         return infos;
 
     }
@@ -87,29 +87,29 @@ public class BookingService extends CrudService<Booking, Long> {
     }
 
     public List<Booking> findReservationsByMainGuestId(Long GuestId) {
-        return reservationRepository.findReservationsByMainGuestId(GuestId);
+        return bookingRepository.findReservationsByMainGuestId(GuestId);
     }
 
-    public List<Booking> findReservationsByReservationStatus(String reservationstatus){
-       return reservationRepository.findReservationsByReservationStatus(reservationstatus);
+    public List<Booking> findReservationsByReservationStatus(String bookingstatus){
+       return bookingRepository.findReservationsByReservationStatus(bookingstatus);
     }
 
     public Long roomIsAvailable(Long roomNumber) {
-        return reservationRepository.roomIsAvailable(roomNumber);
+        return bookingRepository.roomIsAvailable(roomNumber);
     }
 
     public boolean roomExists(Long roomNumber) {
-        return reservationRepository.roomExists(roomNumber);
+        return bookingRepository.roomExists(roomNumber);
     }
 
-    public Booking checkout(Long reservationId) {
-        Booking reservation = reservationRepository.findById(reservationId).orElse(null);
-        if (Objects.isNull(reservation)) {
+    public Booking checkout(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (Objects.isNull(booking)) {
             return null;
         }
         else {
-            reservation.setReservationStatus(BookingStatus.CONCLUDED);
-            return reservationRepository.save(reservation);
+            booking.setBookingStatus(BookingStatus.CONCLUDED);
+            return bookingRepository.save(booking);
         }
     }
 
