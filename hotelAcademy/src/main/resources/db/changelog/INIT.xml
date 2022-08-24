@@ -127,7 +127,8 @@
             </column>
 
             <column name="DEPENDENT_ID" type="INT">
-                <constraints nullable="false"
+
+                <constraints nullable="true"
                              foreignKeyName="fk_dependent_booking"
                              referencedTableName="GUEST"
                              referencedColumnNames="ID"/>
