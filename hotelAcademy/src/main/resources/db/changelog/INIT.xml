@@ -17,11 +17,11 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ROOM"/>
             </column>
 
-            <column name="SLEEP" type="VARCHAR(255)"> <!--${description}-->
+            <column name="SLEEP" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ROOM_TYPE" type="VARCHAR(255)"> <!--${description}-->
+            <column name="ROOM_TYPE" type="VARCHAR(255)"> 
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -39,14 +39,6 @@
 
             <column name="ID" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GUEST"/>
-            </column>
-
-            <column name="RESPONSIBILITY" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="RESPONSIBLE_ID" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
 
             <column name="NAME" type="VARCHAR(255)">
@@ -69,7 +61,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="CEP" type="VARCHAR(255)">
+            <column name="ZIPCODE" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 

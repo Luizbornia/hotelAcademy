@@ -1,17 +1,16 @@
 package br.com.tiacademy.hotelAcademy.service;
 
-import br.com.tiacademy.hotelAcademy.CalculateReservation;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
 import br.com.tiacademy.hotelAcademy.model.Reservation;
-import br.com.tiacademy.hotelAcademy.model.Room;
 import br.com.tiacademy.hotelAcademy.model.RoomType;
 import br.com.tiacademy.hotelAcademy.model.Sleep;
 import br.com.tiacademy.hotelAcademy.repository.ReservationRepository;
 import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class ReservationService extends CrudService<Reservation, Long> implements CalculateReservation {

@@ -24,10 +24,10 @@ public class RoomController extends CrudController<Room, Long> {
     @GetMapping("/portipo")	
     public ResponseEntity<List<Room>> getRoomByType (@RequestParam("type") String type) {
         return ResponseEntity.ok(roomService.getRoomsByType(type));
+    }
 
-    
-
-    
+    @GetMapping("/porquantia")	
+    public ResponseEntity<List<Room>> getRoomBySleep (@RequestParam("quantia") String quantia) {
+        return ResponseEntity.ok(roomService.getRoomsBySleep(quantia));
+    }
 }
-}
-

@@ -25,9 +25,11 @@ public class RoomService extends CrudService<Room, Long> {
 
     public List<Room> getRoomsByType(String type) {
         return roomRepository.findByRoomType(type);
+    }
 
-    
-}
+    public List<Room> getRoomsBySleep(String quantia) {
+        return roomRepository.findBySleep(quantia);
+    }
 }
     
     
