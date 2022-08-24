@@ -20,7 +20,7 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
 
      // Query para o PostMapping
     @Query(value = "SELECT ROOM_NUMBER FROM booking b WHERE ROOM_NUMBER = :roomNumber AND BOOKING_STATUS like 'ACTIVE' " ,nativeQuery = true)
-    Long roomIsAvailable(@Param("roomNumber") Long roomNumber);
+    Long roomIsOccupied(@Param("roomNumber") Long roomNumber);
 
     @Query(value = "SELECT ROOM_NUMBER FROM room r WHERE ROOM_NUMBER = :roomNumber", nativeQuery = true)
     boolean roomExists(@Param("") Long roomNumber);

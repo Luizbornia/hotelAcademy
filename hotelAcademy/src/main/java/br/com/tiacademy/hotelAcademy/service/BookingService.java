@@ -8,7 +8,6 @@ import br.com.tiacademy.hotelAcademy.repository.BookingRepository;
 import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,10 +31,6 @@ public class BookingService extends CrudService<Booking, Long> {
 
     }
 
-    public Booking createReservation(){
-        return new Booking();
-    }
-
     public Room createRoom(Long roomNumber) {
         return roomRepository.findById(roomNumber).orElse(null);
     }
@@ -46,10 +41,10 @@ public class BookingService extends CrudService<Booking, Long> {
 
     public Long dailyAmount(BookingDto dto) {
 
-        LocalDate finalDate = dto.getFinalDate();
-        LocalDate initialDate = dto.getInitialDate();
+        long finalDate = dto.getFinalDate().toEpochDay();
+        long initialDate = dto.getInitialDate().toEpochDay();
 
-        return finalDate.toEpochDay() - initialDate.toEpochDay();
+        return finalDate - initialDate;
     }
 
    /* public Long getTodayDate(ReservationDto dto){
@@ -93,8 +88,8 @@ public class BookingService extends CrudService<Booking, Long> {
        return bookingRepository.findReservationsByReservationStatus(bookingstatus);
     }
 
-    public Long roomIsAvailable(Long roomNumber) {
-        return bookingRepository.roomIsAvailable(roomNumber);
+    public Long roomIsOccupied(Long roomNumber) {
+        return bookingRepository.roomIsOccupied(roomNumber);
     }
 
     public boolean roomExists(Long roomNumber) {

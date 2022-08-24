@@ -31,12 +31,15 @@ public class BookingController extends CrudController<Booking, Long> {
     @PostMapping("/{roomNumber}/{mainGuestId}/{dependentId}")
     public ResponseEntity<Object> createReservation(@PathVariable("roomNumber") Long roomNumber, @PathVariable("mainGuestId") Long mainGuest,
                                                     @PathVariable("dependentId") Long dependentId, @RequestBody BookingDto bookingDto) {
+        Booking booking = new Booking();
 
-        Booking booking = bookingService.createReservation();
-
-        Room room = bookingService.createRoom(roomNumber);
+        Room room = bookingService.createRoom(roomNumber); // Criar quarto caso ele exista
         if (Objects.isNull(room)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Quarto informado não existe");
+        }
+
+        if (room.getRoomNumber().equals(bookingService.roomIsOccupied(roomNumber))) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Quarto já ocupado");
         }
 
         Guest guest = bookingService.createGuest(mainGuest);
@@ -46,9 +49,10 @@ public class BookingController extends CrudController<Booking, Long> {
 
         if (room.getSleep().equals(Sleep.DUO)) {
             Guest dependent = bookingService.createGuest(dependentId);
+            booking.setDependent(dependent);
         }
         else {
-            booking.setDependentId(null);
+            booking.setDependent(null);
         }
 
         double total = bookingService.calculateroomValue(room.getRoomType(), room.getSleep()) * bookingService.dailyAmount(bookingDto);
