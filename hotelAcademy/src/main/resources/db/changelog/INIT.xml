@@ -61,7 +61,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ZIPCODE" type="VARCHAR(255)">
+            <column name="ZIP_CODE" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -123,7 +123,10 @@
             </column>
 
             <column name="DEPENDENT_ID" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="true"
+                             foreignKeyName="fk_dependent_booking"
+                             referencedTableName="GUEST"
+                             referencedColumnNames="ID"/>
             </column>
 
             <column name="BOOKING_STATUS" type="VARCHAR(255)">

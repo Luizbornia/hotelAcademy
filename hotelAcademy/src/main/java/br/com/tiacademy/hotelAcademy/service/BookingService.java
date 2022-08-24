@@ -8,7 +8,6 @@ import br.com.tiacademy.hotelAcademy.repository.BookingRepository;
 import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -41,8 +40,8 @@ public class BookingService extends CrudService<Booking, Long> {
         return roomRepository.findById(roomNumber).orElse(null);
     }
 
-    public Guest createGuest(Long mainGuest){
-        return guestRepository.findById(mainGuest).orElse(null);
+    public Guest createGuest(Long guest){
+        return guestRepository.findById(guest).orElse(null);
     }
 
     public Long dailyAmount(BookingDto dto) {
