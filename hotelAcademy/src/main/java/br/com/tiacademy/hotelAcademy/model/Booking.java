@@ -37,7 +37,9 @@ public class Booking {
     @JoinColumn(name = "MAIN_GUEST_ID", referencedColumnName = "id")
     private Guest guest;
 
-    private Guest dependent;
+    @ManyToOne
+    @JoinColumn(name = "DEPENDENT_ID", referencedColumnName = "id")
+    private Guest dependentId;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;

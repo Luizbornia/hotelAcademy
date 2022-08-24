@@ -14,8 +14,6 @@ public class GuestService extends CrudService<Guest, Long> {
         infos.setName(entity.getName());
         infos.setBirthday(entity.getBirthday());
         infos.setCpf(entity.getCpf());
-        infos.setResponsibility(entity.getResponsibility());
-        infos.setResponsibleId(entity.getResponsibleId());
         infos.setEmail(entity.getEmail());
         infos.setCity(entity.getCity());
         infos.setState(entity.getState());

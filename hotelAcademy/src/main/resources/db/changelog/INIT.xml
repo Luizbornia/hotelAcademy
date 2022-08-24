@@ -24,6 +24,10 @@
             <column name="ROOM_TYPE" type="VARCHAR(255)"> 
                 <constraints nullable="false"/>
             </column>
+
+            <column name="ROOM_STATUS" type="VARCHAR(255)"> 
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>
@@ -61,7 +65,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ZIPCODE" type="VARCHAR(255)">
+            <column name="ZIP_CODE" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
 
@@ -123,7 +127,10 @@
             </column>
 
             <column name="DEPENDENT_ID" type="INT">
-                <constraints nullable="false"/>
+                <constraints nullable="false"
+                             foreignKeyName="fk_dependent_booking"
+                             referencedTableName="GUEST"
+                             referencedColumnNames="ID"/>
             </column>
 
             <column name="BOOKING_STATUS" type="VARCHAR(255)">

@@ -58,7 +58,7 @@ public class BookingController extends CrudController<Booking, Long> {
         booking.setFinalDate(bookingDto.getFinalDate());
         booking.setRoom(room);
         booking.setGuest(guest);
-        booking.setReservationStatus(BookingStatus.ACTIVE);
+        booking.setBookingStatus(BookingStatus.ACTIVE);
         booking.setBookingPrice(total);
 
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.save(booking));

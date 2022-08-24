@@ -25,4 +25,5 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
     @Query(value = "SELECT ROOM_NUMBER FROM room r WHERE ROOM_NUMBER = :roomNumber", nativeQuery = true)
     boolean roomExists(@Param("") Long roomNumber);
 
+
 }
