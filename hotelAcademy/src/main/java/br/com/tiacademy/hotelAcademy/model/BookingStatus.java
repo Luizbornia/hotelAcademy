@@ -1,6 +1,6 @@
 package br.com.tiacademy.hotelAcademy.model;
 
-public enum ReservationStatus {
+public enum BookingStatus {
 
     RESERVED,
     ACTIVE,

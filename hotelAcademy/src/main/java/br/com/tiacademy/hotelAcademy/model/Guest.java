@@ -18,21 +18,14 @@ public class Guest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Responsibility responsibility;
-
-    /*@ManyToOne*/
-    private Long responsibleId; // Guest
-    private String name;
-    private String cpf;
-
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate birthday;
+
+    private String zipCode;
+    private String name;
+    private String cpf;
     private String city;
     private String state;
-
-    @Column(name = "cep")
-    private String zipCode;
     private String street;
     private String number;
     private String email;

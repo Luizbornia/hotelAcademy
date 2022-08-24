@@ -1,7 +1,6 @@
 package br.com.tiacademy.hotelAcademy.model;
 
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,29 +9,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.jackson.Jacksonized;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class Reservation {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDate initialDate; // Alterar para localDate
+    private LocalDate initialDate;
 
     @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDate finalDate; // Alterar para localDate
+    private LocalDate finalDate;
 
     @ManyToOne
     @JoinColumn(name = "ROOM_NUMBER", referencedColumnName = "roomNumber")
@@ -42,10 +37,10 @@ public class Reservation {
     @JoinColumn(name = "MAIN_GUEST_ID", referencedColumnName = "id")
     private Guest guest;
 
+    private Guest dependent;
+
     @Enumerated(EnumType.STRING)
-    private ReservationStatus reservationStatus;
+    private BookingStatus bookingStatus;
 
-    private Long reservationValue;
-
-    //CalculateReservation calculateReservation = new CalculateReservation();
+    private double bookingPrice;
 }
