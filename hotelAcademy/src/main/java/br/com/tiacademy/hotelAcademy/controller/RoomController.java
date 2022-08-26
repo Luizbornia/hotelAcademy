@@ -29,5 +29,17 @@ public class RoomController extends CrudController<Room, Long> {
     @GetMapping("/porquantia")	
     public ResponseEntity<List<Room>> getRoomBySleep (@RequestParam("quantia") String quantia) {
         return ResponseEntity.ok(roomService.getRoomsBySleep(quantia));
+
     }
+
+   
+
+
+
+    
+    
+
+    
+
+    
 }

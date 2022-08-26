@@ -36,4 +36,5 @@ public abstract class CrudService<T, ID> {
         repository.deleteById(id);
     }
     protected abstract T editName(T infos, T entity);
+
 }

@@ -26,4 +26,8 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
+    @Column(name = "ROOM_STATUS")
+    @Enumerated(EnumType.STRING)
+    private RoomStatus roomStatus;
+
 }
