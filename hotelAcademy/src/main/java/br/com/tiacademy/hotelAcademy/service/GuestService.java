@@ -1,10 +1,13 @@
 package br.com.tiacademy.hotelAcademy.service;
 
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
+import br.com.tiacademy.hotelAcademy.model.Booking;
 import br.com.tiacademy.hotelAcademy.model.Guest;
 import br.com.tiacademy.hotelAcademy.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GuestService extends CrudService<Guest, Long> {
@@ -27,5 +30,9 @@ public class GuestService extends CrudService<Guest, Long> {
     protected GuestRepository guestRepository;
     public Guest findGuestByCpf(String cpf) {
         return guestRepository.findGuestByCpf(cpf);
+    }
+
+    public List<Booking> findAllGuestBookings(Long hospedeId) {
+        return guestRepository.findAllGuestBookings(hospedeId);
     }
 }

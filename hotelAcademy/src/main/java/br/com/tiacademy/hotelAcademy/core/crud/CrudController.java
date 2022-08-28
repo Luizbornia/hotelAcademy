@@ -1,4 +1,5 @@
 package br.com.tiacademy.hotelAcademy.core.crud;
+import br.com.tiacademy.hotelAcademy.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +32,8 @@ public abstract class CrudController<T, ID> {
 
     @PostMapping
     public ResponseEntity<T> save(@RequestBody T entity) {
-        T saveEntity = service.save(entity);
-        return ResponseEntity.ok(service.save(saveEntity));
+        return ResponseEntity.ok(service.save(entity));
     }
-
     @PutMapping("/{id}")
         public ResponseEntity<T> editSave(@RequestBody T entity, @PathVariable("id") ID id) {
         return ResponseEntity.ok(service.editSave(entity, id));

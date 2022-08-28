@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,5 +45,10 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private BookingStatus bookingStatus;
 
+    @JsonIgnore
     private double bookingPrice;
+
+    public String getFormattedPrice(){
+        return "R$: " + bookingPrice + "0";
+    }
 }

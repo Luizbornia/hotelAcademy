@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
 import br.com.tiacademy.hotelAcademy.model.Room;
 import br.com.tiacademy.hotelAcademy.repository.RoomRepository;
@@ -27,8 +26,8 @@ public class RoomService extends CrudService<Room, Long> {
         return roomRepository.findByRoomType(type);
     }
 
-    public List<Room> getRoomsBySleep(String quantia) {
-        return roomRepository.findBySleep(quantia);
+    public List<Room> getRoomsBySleep(String sleep) {
+        return roomRepository.findBySleep(sleep);
     }
 }
     
