@@ -10,20 +10,18 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
-    // Query para  o GetMapping
     @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :mainGuestId GROUP BY b.ID", nativeQuery = true)
-    List <Booking> findReservationsByMainGuestId(@Param("mainGuestId")Long GuestId);
+    List <Booking> findBookingByGuestId(@Param("mainGuestId")Long GuestId);
 
-    // Query para o GetMapping
      @Query(value = "SELECT * FROM booking b WHERE b.BOOKING_STATUS like %:status% GROUP BY b.ID", nativeQuery = true)
-    List <Booking>  findReservationsByReservationStatus(@Param("status")String bookingstatus);
+    List <Booking>  findBookingsByReservationStatus(@Param("status")String bookingstatus);
 
-     // Query para o PostMapping
+    @Query(value = "SELECT MAIN_GUEST_ID FROM booking b WHERE MAIN_GUEST_ID = :mainGuestId and BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
+    Long mainGuestInActiveBooking(@Param("mainGuestId") Long mainGuestId);
+
+    @Query(value = "SELECT DEPENDENT_ID FROM booking b WHERE DEPENDENT_ID = :dependentId and BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
+    Long dependentInActiveBooking(@Param("dependentId") Long dependentId);
+
     @Query(value = "SELECT ROOM_NUMBER FROM booking b WHERE ROOM_NUMBER = :roomNumber AND BOOKING_STATUS like 'ACTIVE' " ,nativeQuery = true)
     Long roomIsOccupied(@Param("roomNumber") Long roomNumber);
-
-    @Query(value = "SELECT ROOM_NUMBER FROM room r WHERE ROOM_NUMBER = :roomNumber", nativeQuery = true)
-    boolean roomExists(@Param("") Long roomNumber);
-
-
 }
