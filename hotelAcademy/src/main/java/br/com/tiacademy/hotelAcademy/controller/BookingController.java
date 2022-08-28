@@ -23,8 +23,8 @@ public class BookingController extends CrudController<Booking, Long> {
     }
 
     @GetMapping("/status={bookingStatus}")
-    public ResponseEntity<List<Booking>> findBookingsByReservationStatus(@PathVariable("bookingStatus") String status){
-        return ResponseEntity.ok(bookingService.findBookingsByReservationStatus(status));
+    public ResponseEntity<List<Booking>> findBookingsByBookingStatus(@PathVariable("bookingStatus") String status){
+        return ResponseEntity.ok(bookingService.findBookingsByBookingStatus(status));
     }
 
     @PostMapping("/{roomNumber}/{mainGuestId}/{dependentId}")
