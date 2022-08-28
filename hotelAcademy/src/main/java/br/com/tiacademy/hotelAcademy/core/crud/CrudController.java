@@ -1,5 +1,5 @@
 package br.com.tiacademy.hotelAcademy.core.crud;
-import br.com.tiacademy.hotelAcademy.model.Room;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

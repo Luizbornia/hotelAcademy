@@ -24,6 +24,10 @@
             <column name="ROOM_TYPE" type="VARCHAR(255)"> 
                 <constraints nullable="false"/>
             </column>
+
+            <column name="ROOM_STATUS" type="VARCHAR(255)"> 
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>
@@ -123,6 +127,7 @@
             </column>
 
             <column name="DEPENDENT_ID" type="INT">
+
                 <constraints nullable="true"
                              foreignKeyName="fk_dependent_booking"
                              referencedTableName="GUEST"

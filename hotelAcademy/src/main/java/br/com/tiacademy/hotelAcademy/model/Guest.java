@@ -21,6 +21,7 @@ public class Guest {
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate birthday;
 
+    @Column(name = "ZIP_CODE")
     private String zipCode;
     private String name;
     private String cpf;

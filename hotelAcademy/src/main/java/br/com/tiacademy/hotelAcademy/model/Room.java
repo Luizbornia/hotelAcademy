@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +24,9 @@ public class Room {
     @Column(name = "ROOM_TYPE")
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
+
+    @Column(name = "ROOM_STATUS")
+    @Enumerated(EnumType.STRING)
+    private RoomStatus roomStatus;
 
 }
