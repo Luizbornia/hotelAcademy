@@ -63,8 +63,8 @@ public class BookingService extends CrudService<Booking, Long> {
        return bookingRepository.findBookingsByReservationStatus(bookingstatus);
     }
 
-    public Long roomIsOccupied(Long roomNumber) {
-        return bookingRepository.roomIsOccupied(roomNumber);
+    public List<Booking> findAllGuestBookings(Long guestId) {
+        return bookingRepository.findAllGuestBookings(guestId);
     }
 
     public Long mainGuestInActiveBooking(Long mainGuestId){
@@ -80,9 +80,6 @@ public class BookingService extends CrudService<Booking, Long> {
         Room room = roomService.findById(roomNumber);
         if (Objects.isNull(room)) {
             throw new RoomNotFoundException();
-        }
-        if (room.getRoomNumber().equals(roomIsOccupied(roomNumber))) {
-            throw new RoomAlreadyOccupiedException();
         }
 
         Guest guest = null;

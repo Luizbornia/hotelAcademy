@@ -31,7 +31,8 @@ public class GuestService extends CrudService<Guest, Long> {
         return guestRepository.findGuestByCpf(cpf);
     }
 
-    public List<Booking> findAllGuestBookings(Long hospedeId) {
-        return guestRepository.findAllGuestBookings(hospedeId);
-    }
+
+
+
+
 }

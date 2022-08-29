@@ -3,6 +3,7 @@ package br.com.tiacademy.hotelAcademy.controller;
 import br.com.tiacademy.hotelAcademy.core.crud.CrudController;
 import br.com.tiacademy.hotelAcademy.model.Booking;
 import br.com.tiacademy.hotelAcademy.model.Guest;
+import br.com.tiacademy.hotelAcademy.service.BookingService;
 import br.com.tiacademy.hotelAcademy.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,19 @@ public class GuestController extends CrudController<Guest, Long> {
     @Autowired
     protected GuestService guestService;
 
+    @Autowired
+    protected BookingService bookingService;
+
     @GetMapping("/cpf={cpf}")
     public ResponseEntity<Guest> findGuestByCpf(@PathVariable("cpf") String cpf) {
         return ResponseEntity.ok(guestService.findGuestByCpf(cpf));
     }
 
-    @GetMapping("/reservasfinalizadas/hospede={hospedeId}")
-    public ResponseEntity<List<Booking>> findAllGuestBookings(@PathVariable("hospedeId") Long hospedeId){
-        return ResponseEntity.status(HttpStatus.OK).body(guestService.findAllGuestBookings(hospedeId));
+    @GetMapping("/reservasfinalizadas/{guestId}")
+    public ResponseEntity<List<Booking>> findAllGuestBookings(@PathVariable("guestId") Long guestId){
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.findAllGuestBookings(guestId));
     }
+
+
+
 }
