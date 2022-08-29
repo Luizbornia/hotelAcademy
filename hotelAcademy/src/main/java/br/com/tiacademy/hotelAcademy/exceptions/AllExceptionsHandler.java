@@ -2,12 +2,12 @@ package br.com.tiacademy.hotelAcademy.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
-@org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice {
+@ControllerAdvice
+public class AllExceptionsHandler {
 
     @ExceptionHandler(RoomNotFoundException.class)
     public ResponseEntity<StandardErrorResponse> roomNotFound(RoomNotFoundException exception, HttpServletRequest request){
@@ -22,6 +22,17 @@ public class ControllerAdvice {
 
     @ExceptionHandler(RoomAlreadyOccupiedException.class)
     public ResponseEntity<StandardErrorResponse> RoomAlreadyOccupied(RoomAlreadyOccupiedException exception, HttpServletRequest request) {
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
+    @ExceptionHandler(RoomAlreadyReservedException.class)
+    public ResponseEntity<StandardErrorResponse> RoomAlreadyReserved(RoomAlreadyReservedException exception, HttpServletRequest request) {
         StandardErrorResponse error = new StandardErrorResponse();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());

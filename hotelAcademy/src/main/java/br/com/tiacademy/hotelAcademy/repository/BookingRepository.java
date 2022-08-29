@@ -11,15 +11,15 @@ import java.util.List;
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
     @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :mainGuestId GROUP BY b.ID", nativeQuery = true)
-    List <Booking> findBookingByGuestId(@Param("mainGuestId")Long GuestId);
+    List<Booking> findBookingByGuestId(@Param("mainGuestId")Long GuestId);
 
      @Query(value = "SELECT * FROM booking b WHERE b.BOOKING_STATUS like %:status% GROUP BY b.ID", nativeQuery = true)
-    List <Booking>  findBookingsByBookingStatus(@Param("status")String bookingstatus);
+    List<Booking>  findBookingsByBookingStatus(@Param("status")String bookingstatus);
 
-    @Query(value = "SELECT MAIN_GUEST_ID FROM booking b WHERE MAIN_GUEST_ID = :mainGuestId and BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT b.MAIN_GUEST_ID FROM booking b WHERE b.MAIN_GUEST_ID = :mainGuestId and b.BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
     Long mainGuestInActiveBooking(@Param("mainGuestId") Long mainGuestId);
 
-    @Query(value = "SELECT DEPENDENT_ID FROM booking b WHERE DEPENDENT_ID = :dependentId and BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
+    @Query(value = "SELECT b.DEPENDENT_ID FROM booking b WHERE b.DEPENDENT_ID = :dependentId and b.BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
     Long dependentInActiveBooking(@Param("dependentId") Long dependentId);
 
     @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :GuestId or b.DEPENDENT_ID = :GuestId",nativeQuery = true)

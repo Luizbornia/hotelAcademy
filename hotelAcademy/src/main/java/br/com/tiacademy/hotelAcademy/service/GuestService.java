@@ -8,9 +8,7 @@ import br.com.tiacademy.hotelAcademy.model.Guest;
 import br.com.tiacademy.hotelAcademy.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class GuestService extends CrudService<Guest, Long> {

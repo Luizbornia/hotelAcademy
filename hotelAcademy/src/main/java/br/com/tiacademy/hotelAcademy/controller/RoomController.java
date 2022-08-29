@@ -1,9 +1,7 @@
 package br.com.tiacademy.hotelAcademy.controller;
 
 import java.util.List;
-
 import br.com.tiacademy.hotelAcademy.dto.RoomDto;
-import br.com.tiacademy.hotelAcademy.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +37,4 @@ public class RoomController extends CrudController<Room, Long> {
         Room room = roomService.createRoom(roomDto);
         return ResponseEntity.status(HttpStatus.OK).body(roomService.save(room));
     }
-
 }

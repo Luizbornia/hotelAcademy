@@ -8,6 +8,7 @@ import br.com.tiacademy.hotelAcademy.repository.GuestRepository;
 import br.com.tiacademy.hotelAcademy.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 @Service
@@ -86,30 +87,28 @@ public class BookingService extends CrudService<Booking, Long> {
             throw new RoomAlreadyOccupiedException();
         }
 
-        Guest guest = null;
+        Guest guest;
         if (room.getSleep().equals(Sleep.DUO)) {
             guest = guestRepository.findById(mainGuest).orElse(null);
             if (Objects.isNull(guest)) {
                 throw new MainGuestNotFoundException();
             }
-            if (guest.getId().equals(mainGuestInActiveBooking(mainGuest))) {
+            if (guest.getId().equals(mainGuestInActiveBooking(mainGuest)) || guest.getId().equals(dependentInActiveBooking(mainGuest))) {
                 throw new MainGuestAlreadyInBookingException();
             }
             Guest dependent = guestRepository.findById(dependentId).orElse(null);
             if (Objects.isNull(dependent)) {
                 throw new DependentNotFoundException();
             }
-            if (guest.getId().equals(dependent.getId())) {
-                throw new MainGuestAndDependentAreTheSameException();
-            }
-            if (guest.getId().equals(mainGuestInActiveBooking(mainGuest)) || guest.getId().equals(dependentInActiveBooking(mainGuest))) {
-                throw new MainGuestAlreadyInBookingException();
-            }
             if (dependent.getId().equals(mainGuestInActiveBooking(dependentId)) || dependent.getId().equals(dependentInActiveBooking(dependentId))){
                 throw new DependentAlreadyInBookingException();
             }
+            if (guest.getId().equals(dependent.getId())) {
+                throw new MainGuestAndDependentAreTheSameException();
+            }
             booking.setDependent(dependent);
-        } else {
+        }
+        else {
             guest = guestRepository.findById(mainGuest).orElse(null);
             if (Objects.isNull(guest)) {
                 throw new MainGuestNotFoundException();
@@ -120,26 +119,37 @@ public class BookingService extends CrudService<Booking, Long> {
             booking.setDependent(null);
         }
         setBookingConfigurations(booking, bookingDto, room, guest);
-        booking.getRoom().setRoomStatus(RoomStatus.OCCUPIED);
         return bookingRepository.save(booking);
     }
 
     private void setBookingConfigurations(Booking booking, BookingDto bookingDto, Room room, Guest guest) {
         double total = calculateRoomValue(room.getRoomType(), room.getSleep(), bookingDto);
+        long today = LocalDate.now().toEpochDay();
 
-        booking.setInitialDate(bookingDto.getInitialDate());
-        booking.setFinalDate(bookingDto.getFinalDate());
-        booking.setRoom(room);
-        booking.setGuest(guest);
-        booking.setBookingStatus(BookingStatus.ACTIVE);
-        booking.setBookingPrice(total);
+        if (bookingDto.getInitialDate().toEpochDay() >= today) {
+            booking.setInitialDate(bookingDto.getInitialDate());
+            booking.setFinalDate(bookingDto.getFinalDate());
+            booking.setRoom(room);
+            booking.setGuest(guest);
+            booking.setBookingPrice(total);
+            booking.setBookingStatus(BookingStatus.RESERVED);
+        }
+        else {
+            booking.setInitialDate(bookingDto.getInitialDate());
+            booking.setFinalDate(bookingDto.getFinalDate());
+            booking.setRoom(room);
+            booking.setGuest(guest);
+            booking.setBookingPrice(total);
+            booking.setBookingStatus(BookingStatus.ACTIVE);
+            booking.getRoom().setRoomStatus(RoomStatus.OCCUPIED);
+        }
     }
-
     public Booking endReservation(Long bookingId) {
         Booking booking = checkout(bookingId);
         if (Objects.isNull(booking)) {
             throw new BookingNotFoundException();
-        } else {
+        }
+        else {
             return booking;
         }
     }
@@ -148,7 +158,8 @@ public class BookingService extends CrudService<Booking, Long> {
         Booking booking = bookingRepository.findById(bookingId).orElse(null);
         if (Objects.isNull(booking)) {
             return null;
-        } else {
+        }
+        else {
             booking.setBookingStatus(BookingStatus.CONCLUDED);
             booking.getRoom().setRoomStatus(RoomStatus.AVAILABLE);
             return bookingRepository.save(booking);
