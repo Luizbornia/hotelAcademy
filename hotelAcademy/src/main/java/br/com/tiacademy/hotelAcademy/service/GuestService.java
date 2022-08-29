@@ -32,7 +32,6 @@ public class GuestService extends CrudService<Guest, Long> {
     public Guest findGuestByCpf(String cpf) {
         return guestRepository.findGuestByCpf(cpf);
     }
-
     public String validateIfCpfExists(String cpf){
         return guestRepository.validateIfCpfExists(cpf).orElse(null);
     }

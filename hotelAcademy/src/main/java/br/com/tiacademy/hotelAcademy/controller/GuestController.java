@@ -28,9 +28,9 @@ public class GuestController extends CrudController<Guest, Long> {
         return ResponseEntity.ok(guestService.findGuestByCpf(cpf));
     }
 
-    @GetMapping("/{GuestId}/reservasfinalizadas")
-    public ResponseEntity<List<Booking>> findAllGuestBookings(@PathVariable("GuestId") Long GuestId){
-        return ResponseEntity.status(HttpStatus.OK).body(bookingService.findAllGuestBookings(GuestId));
+    @GetMapping("/reservasfinalizadas/{guestId}")
+    public ResponseEntity<List<Booking>> findAllGuestBookings(@PathVariable("guestId") Long guestId){
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.findAllGuestBookings(guestId));
     }
 
     @PostMapping
@@ -38,5 +38,4 @@ public class GuestController extends CrudController<Guest, Long> {
         Guest guest = guestService.createGuest(guestDto);
         return ResponseEntity.status(HttpStatus.OK).body(guestService.save(guest));
     }
-
 }

@@ -22,6 +22,6 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
     @Query(value = "SELECT b.DEPENDENT_ID FROM booking b WHERE b.DEPENDENT_ID = :dependentId and b.BOOKING_STATUS like 'ACTIVE' ", nativeQuery = true)
     Long dependentInActiveBooking(@Param("dependentId") Long dependentId);
 
-    @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :GuestId or b.DEPENDENT_ID = :GuestId",nativeQuery = true)
-    List<Booking> findAllGuestBookings(@Param("GuestId") Long GuestId);
+    @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :guestId or b.DEPENDENT_ID = :guestId",nativeQuery = true)
+    List<Booking> findAllGuestBookings(@Param("guestId") Long guestId);
 }
