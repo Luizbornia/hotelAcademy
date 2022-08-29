@@ -46,7 +46,7 @@ public class BookingService extends CrudService<Booking, Long> {
         if (roomType.equals(RoomType.MASTER) && sleep.equals(Sleep.DUO)) {
             roomPrice = 200;
         }
-        if (roomType.equals(RoomType.DELUXE) && sleep.equals(Sleep.SINGLE)){
+        if (roomType.equals(RoomType.DELUXE) && sleep.equals(Sleep.SINGLE)) {
             roomPrice = 210;
         }
         if (roomType.equals(RoomType.DELUXE) && sleep.equals(Sleep.DUO)) {
@@ -59,18 +59,19 @@ public class BookingService extends CrudService<Booking, Long> {
         return bookingRepository.findBookingByGuestId(GuestId);
     }
 
-    public List<Booking> findBookingsByReservationStatus(String bookingstatus){
-       return bookingRepository.findBookingsByReservationStatus(bookingstatus);
+    public List<Booking> findBookingsByBookingStatus(String bookingstatus) {
+        return bookingRepository.findBookingsByBookingStatus(bookingstatus);
     }
 
     public List<Booking> findAllGuestBookings(Long guestId) {
         return bookingRepository.findAllGuestBookings(guestId);
     }
 
-    public Long mainGuestInActiveBooking(Long mainGuestId){
+    public Long mainGuestInActiveBooking(Long mainGuestId) {
         return bookingRepository.mainGuestInActiveBooking(mainGuestId);
     }
-    public Long dependentInActiveBooking(Long dependentId){
+
+    public Long dependentInActiveBooking(Long dependentId) {
         return bookingRepository.dependentInActiveBooking(dependentId);
     }
 
@@ -82,6 +83,10 @@ public class BookingService extends CrudService<Booking, Long> {
             throw new RoomNotFoundException();
         }
 
+        if (room.getRoomStatus().equals(RoomStatus.OCCUPIED)) {
+            throw new RoomAlreadyOccupiedException();
+        }
+
         Guest guest = null;
         if (room.getSleep().equals(Sleep.DUO)) {
             guest = guestRepository.findById(mainGuest).orElse(null);
@@ -91,23 +96,21 @@ public class BookingService extends CrudService<Booking, Long> {
             if (guest.getId().equals(mainGuestInActiveBooking(mainGuest))) {
                 throw new MainGuestAlreadyInBookingException();
             }
-            Guest dependent = guestRepository.findById(dependentId).orElse(null);;
+            Guest dependent = guestRepository.findById(dependentId).orElse(null);
             if (Objects.isNull(dependent)) {
-              throw new DependentNotFoundException();
+                throw new DependentNotFoundException();
             }
-            if (dependent.getId().equals(dependentInActiveBooking(dependentId))) {
-                throw new DependentAlreadyInBookingException();
-            }
-            if (guest.getId().equals(mainGuestInActiveBooking(mainGuest)) || guest.getId().equals(dependentInActiveBooking(dependentId))
-                    || dependent.getId().equals(mainGuestInActiveBooking(mainGuest)) || dependent.getId().equals(dependentInActiveBooking(dependentId))) {
-                throw new MainGuestAlreadyInBookingException();
-            }
-            if (guest.getId().equals(dependent.getId())){
+            if (guest.getId().equals(dependent.getId())) {
                 throw new MainGuestAndDependentAreTheSameException();
             }
+            if (guest.getId().equals(mainGuestInActiveBooking(mainGuest)) || guest.getId().equals(dependentInActiveBooking(mainGuest))) {
+                throw new MainGuestAlreadyInBookingException();
+            }
+            if (dependent.getId().equals(mainGuestInActiveBooking(dependentId)) || dependent.getId().equals(dependentInActiveBooking(dependentId))){
+                throw new DependentAlreadyInBookingException();
+            }
             booking.setDependent(dependent);
-        }
-        else {
+        } else {
             guest = guestRepository.findById(mainGuest).orElse(null);
             if (Objects.isNull(guest)) {
                 throw new MainGuestNotFoundException();
@@ -118,10 +121,11 @@ public class BookingService extends CrudService<Booking, Long> {
             booking.setDependent(null);
         }
         setBookingConfigurations(booking, bookingDto, room, guest);
+        booking.getRoom().setRoomStatus(RoomStatus.OCCUPIED);
         return bookingRepository.save(booking);
     }
 
-    private void setBookingConfigurations(Booking booking, BookingDto bookingDto, Room room, Guest guest){
+    private void setBookingConfigurations(Booking booking, BookingDto bookingDto, Room room, Guest guest) {
         double total = calculateRoomValue(room.getRoomType(), room.getSleep(), bookingDto);
 
         booking.setInitialDate(bookingDto.getInitialDate());
@@ -131,12 +135,12 @@ public class BookingService extends CrudService<Booking, Long> {
         booking.setBookingStatus(BookingStatus.ACTIVE);
         booking.setBookingPrice(total);
     }
+
     public Booking endReservation(Long bookingId) {
         Booking booking = checkout(bookingId);
-        if (Objects.isNull(booking)){
-           throw new BookingNotFoundException();
-        }
-        else {
+        if (Objects.isNull(booking)) {
+            throw new BookingNotFoundException();
+        } else {
             return booking;
         }
     }
@@ -145,9 +149,9 @@ public class BookingService extends CrudService<Booking, Long> {
         Booking booking = bookingRepository.findById(bookingId).orElse(null);
         if (Objects.isNull(booking)) {
             return null;
-        }
-        else {
+        } else {
             booking.setBookingStatus(BookingStatus.CONCLUDED);
+            booking.getRoom().setRoomStatus(RoomStatus.AVAILABLE);
             return bookingRepository.save(booking);
         }
     }

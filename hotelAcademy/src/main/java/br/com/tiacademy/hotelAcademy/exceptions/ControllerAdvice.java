@@ -46,11 +46,11 @@ public class ControllerAdvice {
     public ResponseEntity<StandardErrorResponse> MainGuestAlreadyInBooking(MainGuestAlreadyInBookingException exception, HttpServletRequest request) {
         StandardErrorResponse error = new StandardErrorResponse();
         error.setTimestamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
         error.setError("Not Found");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
     }
 
     @ExceptionHandler(DependentNotFoundException.class)
@@ -96,4 +96,38 @@ public class ControllerAdvice {
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(GuestAlreadyExistsException.class)
+    public ResponseEntity<StandardErrorResponse> GuestAlreadyExists(GuestAlreadyExistsException exception, HttpServletRequest request) {
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
+    @ExceptionHandler(RoomAlreadyExistsException.class)
+    public ResponseEntity<StandardErrorResponse> RoomAlreadyExists(RoomAlreadyExistsException exception, HttpServletRequest request) {
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
+    @ExceptionHandler(InvalidCpfLenghtException.class)
+    public ResponseEntity<StandardErrorResponse> InvalidCpfLenght(InvalidCpfLenghtException exception, HttpServletRequest request){
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
 }

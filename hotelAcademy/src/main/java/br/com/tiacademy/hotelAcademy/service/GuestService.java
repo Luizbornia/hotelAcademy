@@ -1,12 +1,16 @@
 package br.com.tiacademy.hotelAcademy.service;
 
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
-import br.com.tiacademy.hotelAcademy.model.Booking;
+import br.com.tiacademy.hotelAcademy.dto.GuestDto;
+import br.com.tiacademy.hotelAcademy.exceptions.GuestAlreadyExistsException;
+import br.com.tiacademy.hotelAcademy.exceptions.InvalidCpfLenghtException;
 import br.com.tiacademy.hotelAcademy.model.Guest;
 import br.com.tiacademy.hotelAcademy.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class GuestService extends CrudService<Guest, Long> {
@@ -30,9 +34,32 @@ public class GuestService extends CrudService<Guest, Long> {
     public Guest findGuestByCpf(String cpf) {
         return guestRepository.findGuestByCpf(cpf);
     }
+    public String validateIfCpfExists(String cpf){
+        return guestRepository.validateIfCpfExists(cpf).orElse(null);
+    }
 
+    public Guest createGuest(GuestDto guestDto) {
+        Guest guest = new Guest();
 
+        guest.setName(guestDto.getName());
+        guest.setCpf(guestDto.getCpf());
+        guest.setBirthday(guestDto.getBirthday());
+        guest.setCity(guestDto.getCity());
+        guest.setState(guestDto.getState());
+        guest.setZipCode(guestDto.getZipCode());
+        guest.setStreet(guestDto.getStreet());
+        guest.setNumber(guestDto.getNumber());
+        guest.setEmail(guestDto.getEmail());
 
+        if (guest.getCpf().length() != 11){
+            throw new InvalidCpfLenghtException();
+        }
 
-
+        if (Objects.isNull(validateIfCpfExists(guest.getCpf()))) {
+            return guestRepository.save(guest);
+        }
+        else {
+            throw new GuestAlreadyExistsException();
+        }
+    }
 }

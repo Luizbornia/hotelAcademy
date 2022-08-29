@@ -1,6 +1,10 @@
 package br.com.tiacademy.hotelAcademy.service;
 
 import java.util.List;
+import java.util.Objects;
+
+import br.com.tiacademy.hotelAcademy.dto.RoomDto;
+import br.com.tiacademy.hotelAcademy.exceptions.RoomAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.tiacademy.hotelAcademy.core.crud.CrudService;
@@ -30,13 +34,26 @@ public class RoomService extends CrudService<Room, Long> {
         return roomRepository.findBySleep(sleep);
     }
 
-    @Override
-    public Room save(Room entity) {
-        entity.setRoomNumber(entity.getRoomNumber());
-        entity.setSleep(entity.getSleep());
-        entity.setRoomType(entity.getRoomType());
-        entity.setRoomStatus(RoomStatus.AVAILABLE);
-        return super.save(entity);
+    public List<Room> getRoomsByStatus(String roomStatus) {
+        return roomRepository.getRoomsByStatus(roomStatus);
+    }
+
+    public Long validateIfRoomExists(Long roomNumber) {
+        return roomRepository.validateIfRoomExists(roomNumber).orElse(null);
+    }
+
+    public Room createRoom(RoomDto roomDto) {
+        if (Objects.isNull(validateIfRoomExists(roomDto.getRoomNumber()))){
+            Room room = new Room();
+            room.setRoomNumber(roomDto.getRoomNumber());
+            room.setSleep(roomDto.getSleep());
+            room.setRoomType(roomDto.getRoomType());
+            room.setRoomStatus(RoomStatus.AVAILABLE);
+            return room;
+        }
+        else {
+            throw new RoomAlreadyExistsException();
+        }
     }
 }
     
