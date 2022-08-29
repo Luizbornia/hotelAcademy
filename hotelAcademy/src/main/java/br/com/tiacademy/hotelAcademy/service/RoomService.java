@@ -2,7 +2,6 @@ package br.com.tiacademy.hotelAcademy.service;
 
 import java.util.List;
 import java.util.Objects;
-
 import br.com.tiacademy.hotelAcademy.dto.RoomDto;
 import br.com.tiacademy.hotelAcademy.exceptions.RoomAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;

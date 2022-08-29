@@ -1,7 +1,6 @@
 package br.com.tiacademy.hotelAcademy.controller;
 
 import br.com.tiacademy.hotelAcademy.core.crud.CrudController;
-import br.com.tiacademy.hotelAcademy.dto.BookingDto;
 import br.com.tiacademy.hotelAcademy.dto.GuestDto;
 import br.com.tiacademy.hotelAcademy.model.Booking;
 import br.com.tiacademy.hotelAcademy.model.Guest;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
