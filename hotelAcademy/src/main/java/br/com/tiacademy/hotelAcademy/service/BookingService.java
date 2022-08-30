@@ -76,6 +76,34 @@ public class BookingService extends CrudService<Booking, Long> {
         return bookingRepository.dependentInActiveBooking(dependentId);
     }
 
+    public long findReservedBookingInitialDate(Long roomNumber){
+        LocalDate reservedBookingInitialDate = bookingRepository.findReservedBookingInitialDate(roomNumber).orElse(null);
+        if (Objects.isNull(reservedBookingInitialDate)){
+            return -1;
+        }
+        else {
+            return reservedBookingInitialDate.toEpochDay();
+        }
+    }
+
+    public long findActiveBookingFinalDate(Long roomNumber){
+        LocalDate activeBookingFinalDate = bookingRepository.findActiveBookingFinalDate(roomNumber).orElse(null);
+        if (Objects.isNull(activeBookingFinalDate)){
+            return -1;
+        }
+        else {
+            return activeBookingFinalDate.toEpochDay();
+        }
+    }
+
+    public Long validateIfRoomIsReserved(Long roomNumber){
+        return bookingRepository.validateIfRoomIsReserved(roomNumber).orElse(null);
+    }
+
+    public Long validateIfRoomIsActive(Long roomNumber){
+        return bookingRepository.validateIfRoomIsActive(roomNumber).orElse(null);
+    }
+
     public Booking createBooking(Long roomNumber, Long mainGuest, Long dependentId, BookingDto bookingDto) {
         Booking booking = new Booking();
 
@@ -125,25 +153,44 @@ public class BookingService extends CrudService<Booking, Long> {
 
     private void setBookingConfigurations(Booking booking, BookingDto bookingDto, Room room, Guest guest) {
         double total = calculateRoomValue(room.getRoomType(), room.getSleep(), bookingDto);
-        long today = LocalDate.now().toEpochDay();
 
-        if (bookingDto.getInitialDate().toEpochDay() >= today) {
-            booking.setInitialDate(bookingDto.getInitialDate());
-            booking.setFinalDate(bookingDto.getFinalDate());
-            booking.setRoom(room);
-            booking.setGuest(guest);
-            booking.setBookingPrice(total);
-            booking.setBookingStatus(BookingStatus.RESERVED);
+        long today = LocalDate.now().toEpochDay();
+        long roomNumber = room.getRoomNumber();
+        long dtoInitialDate = bookingDto.getInitialDate().toEpochDay();
+        long dtoFinalDate = bookingDto.getFinalDate().toEpochDay();
+        long reservedBookingInitialDate = findReservedBookingInitialDate(roomNumber);
+        long activeBookingFinalDate = findActiveBookingFinalDate(roomNumber);
+
+        if (validateIfRoomIsActive(roomNumber) == null && validateIfRoomIsReserved(roomNumber) == null){
+            if (dtoInitialDate == today) {
+                booking.setBookingStatus(BookingStatus.ACTIVE);
+            }
+            if (dtoInitialDate > today){
+                booking.setBookingStatus(BookingStatus.RESERVED);
+            }
+        }
+        else if (validateIfRoomIsReserved(roomNumber).equals(roomNumber)) {
+            if (dtoFinalDate > reservedBookingInitialDate) {
+                throw new RoomAlreadyReservedException();
+            }
+            else {
+                booking.setBookingStatus(BookingStatus.TESTE); // ACTIVE
+            }
         }
         else {
-            booking.setInitialDate(bookingDto.getInitialDate());
-            booking.setFinalDate(bookingDto.getFinalDate());
-            booking.setRoom(room);
-            booking.setGuest(guest);
-            booking.setBookingPrice(total);
-            booking.setBookingStatus(BookingStatus.ACTIVE);
-            booking.getRoom().setRoomStatus(RoomStatus.OCCUPIED);
+            if (dtoInitialDate < activeBookingFinalDate){
+                throw new RoomAlreadyOccupiedException();
+            }
+            else {
+                booking.setBookingStatus(BookingStatus.CONCLUDED); //RESERVED
+            }
         }
+
+        booking.setRoom(room);
+        booking.setInitialDate(bookingDto.getInitialDate());
+        booking.setFinalDate(bookingDto.getFinalDate());
+        booking.setGuest(guest);
+        booking.setBookingPrice(total);
     }
     public Booking endReservation(Long bookingId) {
         Booking booking = checkout(bookingId);
@@ -166,4 +213,7 @@ public class BookingService extends CrudService<Booking, Long> {
             return bookingRepository.save(booking);
         }
     }
+
+
+
 }
