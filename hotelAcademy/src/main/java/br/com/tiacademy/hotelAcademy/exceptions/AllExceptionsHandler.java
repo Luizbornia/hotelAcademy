@@ -20,6 +20,17 @@ public class AllExceptionsHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(RoomHasBookingBetweenInformedDateException.class)
+    public ResponseEntity<StandardErrorResponse> RoomHasBookingBetweenInformedDate(RoomHasBookingBetweenInformedDateException exception, HttpServletRequest request) {
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
     @ExceptionHandler(RoomAlreadyOccupiedException.class)
     public ResponseEntity<StandardErrorResponse> RoomAlreadyOccupied(RoomAlreadyOccupiedException exception, HttpServletRequest request) {
         StandardErrorResponse error = new StandardErrorResponse();
@@ -33,6 +44,17 @@ public class AllExceptionsHandler {
 
     @ExceptionHandler(RoomAlreadyReservedException.class)
     public ResponseEntity<StandardErrorResponse> RoomAlreadyReserved(RoomAlreadyReservedException exception, HttpServletRequest request) {
+        StandardErrorResponse error = new StandardErrorResponse();
+        error.setTimestamp(Instant.now());
+        error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        error.setError("Not Acceptable");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error);
+    }
+
+    @ExceptionHandler(RoomHasReservedAndActiveBookingException.class)
+    public ResponseEntity<StandardErrorResponse> RoomHasReservedAndActiveBooking(RoomHasReservedAndActiveBookingException exception, HttpServletRequest request) {
         StandardErrorResponse error = new StandardErrorResponse();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
