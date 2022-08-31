@@ -34,10 +34,10 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
     @Query(value = "SELECT b.ROOM_NUMBER FROM booking b WHERE ROOM_NUMBER = :roomNumber and b.BOOKING_STATUS like 'ACTIVE'", nativeQuery = true)
     Optional<Long> validateIfRoomIsActive(@Param("roomNumber") Long roomNumber);
 
-    @Query(value = "SELECT b.INITIAL_DATE FROM booking b WHERE ROOM_NUMBER = :roomNumber and b.BOOKING_STATUS like 'RESERVED'", nativeQuery = true)
+    @Query(value = "SELECT b.INITIAL_DATE FROM booking b WHERE b.ROOM_NUMBER = :roomNumber and b.BOOKING_STATUS like 'RESERVED'", nativeQuery = true)
     Optional<LocalDate> findReservedBookingInitialDate(@Param("roomNumber") Long roomNumber);
 
-    @Query(value = "SELECT b.FINAL_DATE FROM booking b WHERE ROOM_NUMBER = :roomNumber and b.BOOKING_STATUS like 'Active'", nativeQuery = true)
+    @Query(value = "SELECT b.FINAL_DATE FROM booking b WHERE b.ROOM_NUMBER = :roomNumber and b.BOOKING_STATUS like 'Active'", nativeQuery = true)
     Optional<LocalDate> findActiveBookingFinalDate(@Param("roomNumber") Long roomNumber);
 
 }

@@ -153,35 +153,39 @@ public class BookingService extends CrudService<Booking, Long> {
     private void setBookingConfigurations(Booking booking, BookingDto bookingDto, Room room, Guest guest) {
         double total = calculateRoomValue(room.getRoomType(), room.getSleep(), bookingDto);
 
-        long today = LocalDate.now().toEpochDay();
         long roomNumber = room.getRoomNumber();
+        long today = LocalDate.now().toEpochDay();
         long dtoInitialDate = bookingDto.getInitialDate().toEpochDay();
         long dtoFinalDate = bookingDto.getFinalDate().toEpochDay();
         long reservedBookingInitialDate = findReservedBookingInitialDate(roomNumber);
         long activeBookingFinalDate = findActiveBookingFinalDate(roomNumber);
+        Long validateIfRoomIsActive = validateIfRoomIsActive(roomNumber);
+        Long validateIfRoomIsReserved = validateIfRoomIsReserved(roomNumber);
 
         // Se nenhuma reserva ativa ou agendada do quarto informado no banco de dados, criar dependendo do dtoInitialDate
-        if (validateIfRoomIsActive(roomNumber) == null && validateIfRoomIsReserved(roomNumber) == null) {
-            if (dtoInitialDate == today) {
+        if (validateIfRoomIsActive == null && validateIfRoomIsReserved == null) {
+            if (dtoInitialDate <= today) {
                 booking.setBookingStatus(BookingStatus.ACTIVE);
+                room.setRoomStatus(RoomStatus.OCCUPIED);
             }
-            else if (dtoInitialDate > today){
+            else {
                 booking.setBookingStatus(BookingStatus.RESERVED);
             }
         }
         // Se existir uma reserva agendada e não existir uma ativa e se o dtoFinalDate <= a dataInitial da reserva agendada, criar uma ativa
         // se dtoInitialDate entre as datas da reserva agendada, exceção RoomHasBookingBetweenInformedDateException();
-        else if (validateIfRoomIsReserved(roomNumber) != null && validateIfRoomIsActive(roomNumber) == null) { // OK
+        else if (validateIfRoomIsReserved != null && validateIfRoomIsActive == null) { // OK
             if (dtoFinalDate <= reservedBookingInitialDate){
                 booking.setBookingStatus(BookingStatus.ACTIVE);
+                room.setRoomStatus(RoomStatus.OCCUPIED);
             }
             else {
                 throw new RoomHasBookingBetweenInformedDateException();
             }
         }
         // Se existir uma reserva ativa e não existir uma agendada e se o dtoInitialDate >= dataFinal da reserva ativa, criar agendada
-        // para criar uma reserva agendada no mesmo quarto, hospedes devem ser diferentes.
-        else if (validateIfRoomIsActive(roomNumber) != null && validateIfRoomIsReserved(roomNumber) == null) {
+        // para criar uma reserva agendada no mesmo quarto, hospedes devem ser diferentes. senão, dará erro na criação do Guest do quarto informando que o mesmo consta em uma reserva ativa
+        else if (validateIfRoomIsReserved == null) {
             if (dtoInitialDate >= activeBookingFinalDate) {
                 booking.setBookingStatus(BookingStatus.RESERVED);
             }
