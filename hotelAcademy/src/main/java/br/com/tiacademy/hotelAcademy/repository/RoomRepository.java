@@ -11,7 +11,7 @@ import br.com.tiacademy.hotelAcademy.model.Room;
 @Repository
 public interface RoomRepository extends CrudRepository<Room, Long> {
 
-  
+
     @Query(value = "SELECT * FROM room r where r.ROOM_TYPE like %:type%", nativeQuery = true)
     List<Room> findByRoomType(@Param("type") String type);
 

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface GuestRepository extends CrudRepository<Guest, Long> {
 
-    @Query(value = "SELECT * FROM guest g WHERE g.CPF like %:cpf%",nativeQuery = true)
+    @Query(value = "SELECT * FROM guest g WHERE g.CPF like :cpf",nativeQuery = true)
     Guest findGuestByCpf(@Param("cpf") String cpf);
 
     @Query(value = "SELECT g.CPF FROM guest g WHERE g.CPF like :cpf", nativeQuery = true)
