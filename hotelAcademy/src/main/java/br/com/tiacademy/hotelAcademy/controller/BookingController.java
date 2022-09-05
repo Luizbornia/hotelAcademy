@@ -17,14 +17,14 @@ public class BookingController extends CrudController<Booking, Long> {
     @Autowired
     protected BookingService bookingService;
 
-    @GetMapping("/hospede={GuestId}")
-    public ResponseEntity<List<Booking>> findBookingByGuestId(@PathVariable("GuestId") Long GuestId) {
-            return ResponseEntity.status(HttpStatus.OK).body(bookingService.findBookingByGuestId(GuestId));
+    @GetMapping("/hospede={guestId}")
+    public ResponseEntity<List<Booking>> findBookingsByGuestId(@PathVariable("guestId") Long guestId) {
+            return ResponseEntity.status(HttpStatus.OK).body(bookingService.findBookingsByGuestId(guestId));
     }
 
     @GetMapping("/status={bookingStatus}")
-    public ResponseEntity<List<Booking>> findBookingsByBookingStatus(@PathVariable("bookingStatus") String status){
-        return ResponseEntity.ok(bookingService.findBookingsByBookingStatus(status));
+    public ResponseEntity<List<Booking>> findBookingsByBookingStatus(@PathVariable("bookingStatus") String bookingStatus){
+        return ResponseEntity.ok(bookingService.findBookingsByBookingStatus(bookingStatus));
     }
 
     @PostMapping("/{roomNumber}/{mainGuestId}/{dependentId}")

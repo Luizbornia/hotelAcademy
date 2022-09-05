@@ -56,12 +56,12 @@ public class BookingService extends CrudService<Booking, Long> {
         return roomPrice * (finalDate - initialDate);
     }
 
-    public List<Booking> findBookingByGuestId(Long GuestId) {
-        return bookingRepository.findBookingByGuestId(GuestId);
+    public List<Booking> findBookingsByGuestId(Long guestId) {
+        return bookingRepository.findBookingsByGuestId(guestId);
     }
 
-    public List<Booking> findBookingsByBookingStatus(String bookingstatus) {
-        return bookingRepository.findBookingsByBookingStatus(bookingstatus);
+    public List<Booking> findBookingsByBookingStatus(String bookingStatus) {
+        return bookingRepository.findBookingsByBookingStatus(bookingStatus);
     }
 
     public List<Booking> findAllGuestBookings(Long guestId) {
@@ -76,18 +76,19 @@ public class BookingService extends CrudService<Booking, Long> {
         return bookingRepository.dependentInActiveBooking(dependentId);
     }
 
-    public long findReservedBookingInitialDate(Long roomNumber){
+    public long findReservedBookingInitialDate(Long roomNumber) {
         LocalDate reservedBookingInitialDate = bookingRepository.findReservedBookingInitialDate(roomNumber).orElse(null);
-        if (Objects.isNull(reservedBookingInitialDate)){
+        if (Objects.isNull(reservedBookingInitialDate)) {
             return -1;
         }
         else {
             return reservedBookingInitialDate.toEpochDay();
         }
     }
-    public long findActiveBookingFinalDate(Long roomNumber){
+
+    public long findActiveBookingFinalDate(Long roomNumber) {
         LocalDate activeBookingFinalDate = bookingRepository.findActiveBookingFinalDate(roomNumber).orElse(null);
-        if (Objects.isNull(activeBookingFinalDate)){
+        if (Objects.isNull(activeBookingFinalDate)) {
             return -1;
         }
         else {
@@ -95,11 +96,11 @@ public class BookingService extends CrudService<Booking, Long> {
         }
     }
 
-    public Long validateIfRoomIsReserved(Long roomNumber){
+    public Long validateIfRoomIsReserved(Long roomNumber) {
         return bookingRepository.validateIfRoomIsReserved(roomNumber).orElse(null);
     }
 
-    public Long validateIfRoomIsActive(Long roomNumber){
+    public Long validateIfRoomIsActive(Long roomNumber) {
         return bookingRepository.validateIfRoomIsActive(roomNumber).orElse(null);
     }
 
@@ -128,7 +129,7 @@ public class BookingService extends CrudService<Booking, Long> {
             if (Objects.isNull(dependent)) {
                 throw new DependentNotFoundException();
             }
-            if (dependent.getId().equals(mainGuestInActiveBooking(dependentId)) || dependent.getId().equals(dependentInActiveBooking(dependentId))){
+            if (dependent.getId().equals(mainGuestInActiveBooking(dependentId)) || dependent.getId().equals(dependentInActiveBooking(dependentId))) {
                 throw new DependentAlreadyInBookingException();
             }
             if (guest.getId().equals(dependent.getId())) {
@@ -172,7 +173,7 @@ public class BookingService extends CrudService<Booking, Long> {
             }
         }
         else if (validateIfRoomIsReserved != null && validateIfRoomIsActive == null) { // OK
-            if (dtoFinalDate <= reservedBookingInitialDate){
+            if (dtoFinalDate <= reservedBookingInitialDate) {
                 booking.setBookingStatus(BookingStatus.ACTIVE);
                 room.setRoomStatus(RoomStatus.OCCUPIED);
             }

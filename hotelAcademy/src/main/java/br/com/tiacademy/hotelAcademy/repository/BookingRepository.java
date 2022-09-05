@@ -14,10 +14,10 @@ import java.util.Optional;
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
     @Query(value = "SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :mainGuestId GROUP BY b.ID", nativeQuery = true)
-    List<Booking> findBookingByGuestId(@Param("mainGuestId")Long GuestId);
+    List<Booking> findBookingsByGuestId(@Param("mainGuestId")Long guestId);
 
     @Query(value = "SELECT * FROM booking b WHERE b.BOOKING_STATUS like %:status% GROUP BY b.ID", nativeQuery = true)
-    List<Booking>  findBookingsByBookingStatus(@Param("status")String bookingstatus);
+    List<Booking>  findBookingsByBookingStatus(@Param("status")String bookingStatus);
 
     @Query(value = " SELECT * FROM booking b WHERE b.MAIN_GUEST_ID = :guestId or b.DEPENDENT_ID = :guestId",nativeQuery = true)
     List<Booking> findAllGuestBookings(@Param("guestId") Long guestId);
